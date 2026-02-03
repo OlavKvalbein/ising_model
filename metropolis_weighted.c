@@ -6,15 +6,17 @@
 #define SIZE 200
 #define STEPS (SIZE*SIZE*100)
 
-double T = 1.5; // temperature * k / epsilon
+double T = 1.0; // temperature * k / epsilon
 char spin[SIZE][SIZE];
+double J[SIZE][SIZE][4]; // interaction strength for the neighbors top, bottom, left, right.
 
 char energyDiff(int i, int j)
 {
-    char top = spin[(i-1)%SIZE][j];
-    char bottom = spin[(i+1)%SIZE][j];
-    char left = spin[i][(j-1)%SIZE];
-    char right = spin[i][(j+1)%SIZE];
+    double* Jij = J[i][j];
+    char top = Jij[0]*spin[(i-1)%SIZE][j];
+    char bottom = Jij[1]*spin[(i+1)%SIZE][j];
+    char left = Jij[2]*spin[i][(j-1)%SIZE];
+    char right = Jij[3]*spin[i][(j+1)%SIZE];
 
     return 2*spin[i][j]*(top+bottom+left+right);
 }
@@ -45,14 +47,35 @@ void step()
     }
 }
 
+void setJ()
+{
+    for (int i = 0; i < SIZE; i++) {
+        for (int j = 0; j < SIZE; j++) {
+            double *Jij = J[i][j];
+            Jij[0] = 1.0; // top
+            Jij[1] = 1.0; // bottom
+            Jij[2] = -1.0; // left
+            Jij[3] = -1.0; // right
+        }
+    }
+
+    // // a wall in the middle
+    // for (int i = 0; i < SIZE; i++) {
+    //     J[i][SIZE/2][3] = 0;
+    //     J[i][SIZE/2 + 1][2] = 0;
+    // }
+}
+
 void initialize()
 {
     srand(time(NULL));
+
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             spin[i][j] = rand01() < 0.5 ? -1 : 1;
         }
     }
+    setJ();
 }
 
 void export()
