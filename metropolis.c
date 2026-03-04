@@ -3,10 +3,10 @@
 #include <time.h>
 #include <math.h>
 
-#define SIZE 200
+#define SIZE 300
 #define STEPS (SIZE*SIZE*100)
 
-double T = 1.5; // temperature * k / epsilon
+double T = 1.5; // T * k / J
 char spin[SIZE][SIZE];
 
 char energyDiff(int i, int j)
@@ -55,9 +55,9 @@ void initialize()
     }
 }
 
-void export()
+void export(char* filepath)
 {
-    FILE* fp = fopen("data.csv", "w");
+    FILE* fp = fopen(filepath, "w");
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             fprintf(fp, "%d,", spin[i][j] > 0 ? 1 : 0);
@@ -66,13 +66,14 @@ void export()
     }
 }
 
-int main() 
+int main(int argc, char* argv[]) 
 {
     printf("simulating...\n");
     initialize();
     for (int i = 0; i < STEPS; i++)
         step();
     printf("exporting...\n");
-    export();
+    char *dataFilepath = argv[1];
+    export(dataFilepath);
     printf("done!\n");
 }

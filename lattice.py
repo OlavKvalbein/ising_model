@@ -35,7 +35,7 @@ class Lattice():
 
 
 if __name__ == "__main__":
-    gridsize = 100
+    gridsize = 300
     T_J_ratio = 1.5
     lattice = Lattice(gridsize, T_J_ratio)
     MC_steps = 100
