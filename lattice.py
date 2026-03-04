@@ -1,11 +1,13 @@
 import matplotlib.pyplot as plt
+from numba import jit
+
 import math
 import random
 
 class Lattice():
-    def __init__(self, gridsize, temperature):
+    def __init__(self, gridsize, T_J_ratio):
         self.size = gridsize
-        self.T = temperature
+        self.T_J_ratio = T_J_ratio
         self.spin = [[random.choice([-1,1]) for _ in range(self.size)] for _ in range(self.size)]
 
     def energy_diff(self, i, j):
@@ -24,7 +26,7 @@ class Lattice():
         if deltaE <= 0:
             self.spin[i][j] *= -1
         else:
-            flip_probability = math.exp(-deltaE/self.T)
+            flip_probability = math.exp(-deltaE/self.T_J_ratio)
             if random.random() < flip_probability:
                 self.spin[i][j] *= -1
 
@@ -35,8 +37,8 @@ class Lattice():
 
 if __name__ == "__main__":
     gridsize = 100
-    temperature = 1.5
-    lattice = Lattice(gridsize, temperature)
+    T_J_ratio = 1.5
+    lattice = Lattice(gridsize, T_J_ratio)
     MC_steps = 100
     for _ in range(MC_steps):
         lattice.MC_step()
