@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from numba import jit
 
 import math
 import random
@@ -40,7 +39,8 @@ if __name__ == "__main__":
     T_J_ratio = 1.5
     lattice = Lattice(gridsize, T_J_ratio)
     MC_steps = 100
-    for _ in range(MC_steps):
+    for i in range(MC_steps):
+        print(f"\rGenerating lattice series... MC step {i+1}/{MC_steps}", end="", flush=True)
         lattice.MC_step()
     plt.imshow(lattice.spin, cmap="gray")
     plt.show()
