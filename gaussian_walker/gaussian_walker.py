@@ -29,4 +29,5 @@ for i in range(len(deltas)):
     ax[i].set_ylim(-3, 3)
     ax[i].set_title(f"$\delta$ = {deltas[i]}")
 
+plt.legend()
 plt.show()

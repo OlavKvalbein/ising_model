@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 T = 500
-nWalkers = 10000
+nWalkers = 1000
 
 pos = []
 for i in range(nWalkers):

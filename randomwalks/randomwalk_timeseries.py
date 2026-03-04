@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 T = 5000
-nWalkers = 10000
+nWalkers = 1000
 
 pos = np.array([0 for _ in range(nWalkers)])
 means = []

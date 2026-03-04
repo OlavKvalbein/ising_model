@@ -78,9 +78,9 @@ void initialize()
     setJ();
 }
 
-void export()
+void export(char* filepath)
 {
-    FILE* fp = fopen("data.csv", "w");
+    FILE* fp = fopen(filepath, "w");
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
             fprintf(fp, "%d,", spin[i][j] > 0 ? 1 : 0);
@@ -89,13 +89,13 @@ void export()
     }
 }
 
-int main() 
+int main(int argc, char* argv[]) 
 {
     printf("simulating...\n");
     initialize();
     for (int i = 0; i < STEPS; i++)
         step();
     printf("exporting...\n");
-    export();
+    export(argv[0]);
     printf("done!\n");
 }

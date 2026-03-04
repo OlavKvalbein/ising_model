@@ -25,7 +25,7 @@ def walker(delta, T):
         xs.append(x)
     return xs
 
-delta = 0.5
+delta = 1.0
 Ts = [0.1, 1.0, 10.0]
 walks = [walker(delta, T) for T in Ts]
 
