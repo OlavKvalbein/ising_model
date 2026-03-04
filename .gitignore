@@ -1,5 +1,3 @@
-.gitignore
-test.py
 /.vscode
 /data
 /builds
