@@ -9,49 +9,44 @@ def spin_average(spin_2d):
         n += len(row)
     return total / n
 
-gridsize = 100
+gridsize = 64
 T_values = [1.0, 1.5, 2.0, 2.5, 3.0]
 T_values = [abs(T) for T in T_values]
-MC_steps = 100
+MC_steps = 1000
+
+N_sims = 100
 
 m_hists = {}
 
+for T in T_values:
+    m_sum = [0.0] * MC_steps  
 
-fig, axes = plt.subplots(1, len(T_values), figsize=(8, 5))
+    for sim in range(N_sims):
+        lattice_n = Lattice(gridsize, T)
 
-for ax, T in zip(axes, T_values):
-    lattice_n = Lattice(gridsize, T)
-    m_hist = []
+        for step in range(MC_steps):
+            print(
+                f"\rT={T} | sim {sim+1}/{N_sims} | MC step {step+1}/{MC_steps}",
+                end="",
+                flush=True
+            )
 
-    for i in range(MC_steps):
-        print(f"\rT={T} | Generating lattice series... MC step {i+1}/{MC_steps}", end="", flush=True)
+            for _ in range(gridsize**2):
+                lattice_n.step()
 
-        for _ in range(gridsize**2):
-            lattice_n.step()
+            m_sum[step] += abs(spin_average(lattice_n.spin))
+        print()
 
-        m_hist.append(abs(spin_average(lattice_n.spin)))
-
-    print()
-    m_hists[T] = m_hist  # save for the second plot
-
-    ax.imshow(lattice_n.spin, cmap="gray")
-    ax.axis("off")
-    ax.set_title(f"T = {T}")
-
-plt.tight_layout()
-plt.show()
+    m_hists[T] = [x / N_sims for x in m_sum]
+    
 
 plt.figure()
 for T in T_values:
     plt.plot(m_hists[T], label=f"T={T}")
 
 plt.xlabel("MC step")
-plt.ylabel("Spin average  |m| = |<s>|")
+plt.ylabel("Average |m| = average(|<s>|) over simulations")
 plt.legend()
-plt.savefig("fig_1.png" , dpi = 200)
 plt.show()
-
-
-
 
 
