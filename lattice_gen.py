@@ -14,7 +14,7 @@ T_values = [1.0, 1.5, 2.0, 2.5, 3.0]
 T_values = [abs(T) for T in T_values]
 MC_steps = 1000
 
-N_sims = 100
+N_sims = 10
 
 m_hists = {}
 
