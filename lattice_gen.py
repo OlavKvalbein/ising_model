@@ -2,12 +2,10 @@ import matplotlib.pyplot as plt
 from lattice import Lattice
 
 def spin_average(spin_2d, gridsize):
-    total = 0
-    for row in spin_2d:
-        total += sum(row)
+    total = sum([sum(row) for row in spin_2d])
     return total / gridsize**2
 
-gridsize = 64
+gridsize = 16
 T_values = [1.0, 1.5, 2.0, 2.5, 3.0]
 MC_steps = 1000
 
