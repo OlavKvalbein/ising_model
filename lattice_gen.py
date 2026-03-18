@@ -1,17 +1,14 @@
 import matplotlib.pyplot as plt
 from lattice import Lattice
 
-def spin_average(spin_2d):
+def spin_average(spin_2d, gridsize):
     total = 0
-    n = 0
     for row in spin_2d:
         total += sum(row)
-        n += len(row)
-    return total / n
+    return total / gridsize**2
 
 gridsize = 64
 T_values = [1.0, 1.5, 2.0, 2.5, 3.0]
-T_values = [abs(T) for T in T_values]
 MC_steps = 1000
 
 N_sims = 100
@@ -33,7 +30,7 @@ for T in T_values:
 
             lattice_n.MC_step()
 
-            m_sum[step] += abs(spin_average(lattice_n.spin))
+            m_sum[step] += abs(spin_average(lattice_n.spin, gridsize))
         print()
 
     m_hists[T] = [x / N_sims for x in m_sum]
