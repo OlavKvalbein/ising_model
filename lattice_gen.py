@@ -31,8 +31,7 @@ for T in T_values:
                 flush=True
             )
 
-            for _ in range(gridsize**2):
-                lattice_n.step()
+            lattice_n.MC_step()
 
             m_sum[step] += abs(spin_average(lattice_n.spin))
         print()
