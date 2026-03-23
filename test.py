@@ -1,0 +1,2 @@
+from spin_average_timeseries import spin_average_series
+
