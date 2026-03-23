@@ -4,19 +4,19 @@ import numpy as np
 from lattice import Lattice
 
 gridsize = 16
-MC_steps = 1000
-sample_pts = np.arange(0, MC_steps, 10)
-ensemble_size = 500
-Ts = [2.0, 2.1, 2.2, 2.3, 2.4, 2.5]
+steps = 500 # MC steps
+sample_steps = np.arange(0, steps, 10)
+ensemble_size = 100
+Ts = [0.5,1.0,1.5,2.0,2.5,3.0]
 
 lattice = Lattice(gridsize, 0.0)
 
 for i in range(len(Ts)):
     T = Ts[i]
     lattice.T_J_ratio = T
-    spin_avg_series = lattice.spin_avg_series(ensemble_size, MC_steps, sample_pts)
+    spin_avg_series = lattice.spin_avg_series(ensemble_size, steps, sample_steps)
 
-    plt.plot(sample_pts, spin_avg_series, label=f"$T = {T}$")
+    plt.plot(sample_steps, spin_avg_series, label=f"$T = {T}$")
     print(f"\rTemperature {i+1} / {len(Ts)} done...", end="", flush=True)
 
 plt.xlabel("MC step")

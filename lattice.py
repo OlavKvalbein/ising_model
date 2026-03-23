@@ -5,7 +5,7 @@ import math
 import random
 
 class Lattice():
-    def __init__(self, gridsize, T_J_ratio):
+    def __init__(self, gridsize, T_J_ratio=2.0):
         self.size = gridsize
         self.T_J_ratio = T_J_ratio
         self.spin = [[random.choice([-1,1]) for _ in range(self.size)] for _ in range(self.size)]
@@ -42,9 +42,9 @@ class Lattice():
         self.spin = [[random.choice([-1,1]) for _ in range(self.size)] for _ in range(self.size)]
 
     # the average spin as a timeseries, averaged over an ensemble
-    def spin_avg_series(self, ensemble_size, MC_steps, sample_pts):
+    def spin_avg_series(self, ensemble_size, MC_steps, sample_steps):
         # sum of the spin averages over an ensemble as a timeseries
-        ensemble_sum = [0.0] * len(sample_pts)
+        ensemble_sum = [0.0] * len(sample_steps)
         
         # looping over each instance in the ensemble
         for _ in range(ensemble_size):
@@ -53,9 +53,9 @@ class Lattice():
 
             # adding to the ensemble sum
             ensemble_sum[0] += abs(self.spin_avg())
-            for sample_nr in range(1, len(sample_pts)):
+            for sample_nr in range(1, len(sample_steps)):
                 # how many MC steps between each sample
-                MC_steps = sample_pts[sample_nr] - sample_pts[sample_nr-1]
+                MC_steps = sample_steps[sample_nr] - sample_steps[sample_nr-1]
 
                 for _ in range(MC_steps):
                     self.MC_step()
