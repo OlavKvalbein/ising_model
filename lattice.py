@@ -41,7 +41,7 @@ class Lattice():
     def reset_spin(self):
         self.spin = [[random.choice([-1,1]) for _ in range(self.size)] for _ in range(self.size)]
 
-    # returns the average spin as a timeseries, averaged over an ensemble
+    # the average spin as a timeseries, averaged over an ensemble
     def spin_avg_series(self, ensemble_size, MC_steps, sample_pts):
         # sum of the spin averages over an ensemble as a timeseries
         ensemble_sum = [0.0] * len(sample_pts)
